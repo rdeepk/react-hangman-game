@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Hangman from '../Hangman';
 
 class PrintHangman extends Component {
       constructor() {
@@ -13,7 +14,7 @@ class PrintHangman extends Component {
           }
       }
 
-      ComponentWillMount() {
+      updateHangman = () => {
         switch(this.props.nWrong) {
             case 1:
                 this.setState({
@@ -60,6 +61,7 @@ class PrintHangman extends Component {
 
     render() {
         return (
+            <div>
             <div className='hangmanContainer'>
                 <div className='base'></div>
                 <div className='post'></div>
@@ -71,6 +73,8 @@ class PrintHangman extends Component {
                 <div style={{display:this.state.displayRightArm}} className='rightArm'></div>
                 <div style={{display:this.state.displayLeftLeg}} className='leftLeg'></div>
                 <div style={{display:this.state.displayRightLeg}} className='rightLeg'></div>
+            </div>
+            <Hangman keys={this.props.keys} words={this.props.words} />
             </div>
             )
         }

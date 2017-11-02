@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Hangman from '../Hangman';
+import PrintHangman from '../PrintHangman';
 import './App.css';
 
 class App extends Component {
@@ -9,7 +9,7 @@ class App extends Component {
         <div className="navBar">
           <h1>HANGMAN</h1>
         </div>
-        <Hangman keys={this.props.keys} words={this.props.words} />
+        <PrintHangman keys={this.props.keys} words={this.props.words} />
       </div>
     );
   }
