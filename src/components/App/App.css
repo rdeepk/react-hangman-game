@@ -1,0 +1,134 @@
+body, html{
+  height: 100vh;
+}
+
+.App {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.navBar{
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+}
+
+.App h1{
+  font-size: 3em;
+}
+
+.base{
+  position: absolute;
+  height: 100px;
+  width: 500px;
+  bottom: 0;
+  left: 0;
+  background-color: black;
+}
+
+button {
+  color: #fff;
+  font-size: 2em;
+  background-color: black;
+  text-shadow: 2px 2px dimgrey;
+  padding:10px;
+  border: none;
+}
+
+.post{
+  position: absolute;
+  height: 400px;
+  width: 10px;
+  bottom: 100px;
+  left: 195px;
+  background-color: black;
+}
+
+.bar{
+  position: absolute;
+  height: 10px;
+  width: 200px;
+  bottom: 500px;
+  left: 195px;
+  background-color: black;
+}
+
+.rope{
+  position: absolute;
+  height: 50px;
+  width: 10px;
+  bottom: 450px;
+  left: 385px;
+  background-color: black;
+}
+
+.head{
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  bottom: 380px;
+  left: 353px;
+  border-radius: 100px;
+  border: 7px solid black;
+}
+
+.body{
+  position: absolute;
+  width: 7px;
+  height: 120px;
+  bottom: 260px;
+  left: 387px;
+  background-color: black;
+}
+
+.leftArm{
+  transform: rotate(45deg);
+  position: absolute;
+  height: 60px;
+  width: 7px;
+  bottom: 300px;
+  left: 365px;
+  background-color: black;
+}
+
+.rightArm{
+  transform: rotate(-45deg);
+  position: absolute;
+  height: 60px;
+  width: 7px;
+  bottom: 300px;
+  left: 409px;
+  background-color: black;
+}
+
+.leftLeg{
+  transform: rotate(45deg);
+  position: absolute;
+  height: 60px;
+  width: 7px;
+  bottom: 210px;
+  left: 365px;
+  background-color: black;
+}
+
+.rightLeg{
+  transform: rotate(-45deg);
+  position: absolute;
+  height: 60px;
+  width: 7px;
+  bottom: 210px;
+  left: 409px;
+  background-color: black;
+}
+
+.guess{
+  font-size: 2em;
+}
+
+.gameContainer{
+  position: absolute;
+  left: 50%;
+  top: 20%;
+}
