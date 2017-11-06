@@ -42,6 +42,7 @@ button {
 .hangmanContainer {
   position: relative;
   height: 530px;
+  margin-bottom: 100px;
 }
 
 .post{
@@ -136,6 +137,39 @@ button {
   background-color: black;
 }
 
+@media(max-width: 767px) {
+  .base {
+    width: 350px;
+  }
+  .post { 
+    left: 100px;
+  }
+  .bar {
+    left: 100px;
+  }
+  .rope {
+    left: 290px;
+  }
+  .head {
+    left: 265px;
+  }
+  .body {
+    left: 290px;
+  }
+  .leftArm {
+    left: 270px;
+  }
+  .rightArm {
+    left: 310px;
+  }
+  .leftLeg {
+    left: 270px
+  }
+  .rightLeg {
+    left: 310px;
+  }
+}
+
 .keypad {
   text-align: center;
 }
@@ -188,6 +222,7 @@ button {
   font-size: 20px;
   border-radius: 6px;
   padding: 20px 25px;
+  margin-bottom: 30px;
 }
 
 .new-btn a:hover,
@@ -203,6 +238,13 @@ button {
   -webkit-transition: background-color .5s, color .5s;
   -moz-transition: background-color, .5s, color .5s;
   transition: background-color .5s, color .5s;
+}
+
+@media (max-width: 767px) {
+  .new-btn,
+  .view-stats {
+    text-align: center;
+  }
 }
 
 .stats {

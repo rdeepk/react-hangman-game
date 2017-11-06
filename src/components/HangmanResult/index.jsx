@@ -23,15 +23,13 @@ class HangmanResult extends Component {
 
     displayKeypad = (keys) => {
         let keysJSX = keys.map((key, i) => {
-                return <span><a key={i} href={key} onClick={(e) => {this.setInput(e)}}>{key}</a>
-                <span> </span></span>
+                return <span><a key={i} href={key} onClick={(e) => {this.setInput(e)}}>{key}</a></span>
         })
         return keysJSX;
     }
 
     setInput = (e) => {
         e.preventDefault();
-
             this.setState({
                 guess: e.target.href.substr(-1).toLowerCase()
             },() => {
@@ -52,6 +50,7 @@ class HangmanResult extends Component {
                         found = true;
                         console.log("You found a relevant number");
                     }
+                    this.checkWonCondition();
             
                     if (!found) {
                         console.log("Oops! Incorrect Choice. Please try again");
@@ -65,17 +64,38 @@ class HangmanResult extends Component {
                 }
             })
     }
-
-    setWon = () => {
-        console.log("setting won");
-        this.setState({
-            won: true,
-            lost: false,
-            gameOver: true,
-            message: "Congratulations! You have Won",
-        })
-        this.props.setWonStats(true)
-    }   
+    
+    checkWonCondition = () => {
+        let counter = 0;
+        let str = "";
+        // for each letter in the target word
+        for (let i = 0; i < this.state.answer.length; i++) {
+            let found = false;
+            // loop through the pastGuesses
+            for (let j = 0; j < this.state.pastGuesses.length; j++) {
+                // and check each element of past guesses to see if it matches the
+                if (this.state.answer[i] === this.state.pastGuesses[j]) {
+                    found = true;
+                }
+            }
+            if (found) {
+                str += this.state.answer[i];
+                str += "\t";
+                counter++;
+            } else {
+                str += "__\t";
+            }
+        }
+        if (counter === this.state.answer.length) {
+            this.setState({
+                won: true,
+                lost: false,
+                gameOver: true,
+                message: "Congratulations! You have Won",
+            })
+            this.props.setWonStats(true)
+        }
+    }
 
     isGameOver = () => {
         if(this.state.nWrong >= 6) {
@@ -133,11 +153,11 @@ class HangmanResult extends Component {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-sm-6">
-                        <div className="new-btn"><a href="" onClick={this.setupGame}>Start New Game</a></div>
+                    <div className="col-sm-6 new-btn">
+                        <a className="btn" href="" onClick={this.setupGame}>Start New Game</a>
                     </div>
-                    <div className="col-sm-6">
-                        <Link className="stats-btn" to="stats">View Stats</Link>
+                    <div className="col-sm-6 view-stats">
+                        <Link className="btn stats-btn" to="stats">View Stats</Link>
                     </div>
                 </div>
             </div>

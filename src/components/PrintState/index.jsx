@@ -5,7 +5,7 @@ class PrintState extends Component {
     constructor() {
         super();
         this.state = {
-            gameState: "",
+            won: false
         }
     }
 
@@ -31,14 +31,7 @@ class PrintState extends Component {
             str += "__\t";
         }
     }
-   
     return str;
-  }
-
-  componentDidUpdate() {
-      if (this.counter === this.props.answer.length) {
-        this.props.setWon();
-    }
   }
 
   render() {
