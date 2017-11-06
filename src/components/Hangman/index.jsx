@@ -22,8 +22,8 @@ class Hangman extends Component {
 
     displayKeypad = (keys) => {
         let keysJSX = keys.map((key, i) => {
-            return <span><a key={i} href={key} onClick={(e) => {this.setInput(e)}}>{key}</a>
-                    <span> </span></span>
+                return <span><a key={i} href={key} onClick={(e) => {this.setInput(e)}}>{key}</a>
+                <span> </span></span>
         })
         return keysJSX;
     }
@@ -57,7 +57,7 @@ class Hangman extends Component {
                         this.setState({
                             nWrong: this.state.nWrong+1
                         }, () => {
-                            this.props.updateHangman(this.state.nWrong);
+                            this.props.updateNWrongs(this.state.nWrong);
                             this.isGameOver();
                         })
                     }
@@ -108,16 +108,36 @@ class Hangman extends Component {
     render() {
         return (
             <div>
-                <div className="keypad">{this.displayKeypad(this.props.keys)}</div>
-                <PrintState pastGuesses={this.state.pastGuesses} answer={this.state.answer} setWon={this.setWon} />
-                <div className='gameContainer'>
+            <div className="row">
+                <div className="col-sm-12">
+                    <div className="keypad">{this.displayKeypad(this.props.keys)}</div>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-sm-12 game-state">
+                    <PrintState pastGuesses={this.state.pastGuesses} answer={this.state.answer} setWon={this.setWon} />
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-sm-12 game-state">
+                    <h3>{this.state.message}</h3>
+                    <p>Your word is: {this.state.randomWord}</p>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-sm-12 game-state">
+                    <div className="new-btn"><a href="" onClick={this.setupGame}>Start New Game</a></div>
+                </div>
+            </div>
+                
+                {/* <div className='gameContainer'>
                     <h1>{this.state.message}</h1>
                     <h1>Currently Selected Guess is: {this.state.guess}</h1>
                     <h1>Your word is: {this.state.randomWord}</h1>
                     <h2>Your current guesses are: {this.state.pastGuesses.join(' ')}</h2>
                     <p> Wrongs: {this.state.nWrong}</p>
-                </div>
-                <div><a href="" onClick={this.setupGame}>Start New Game</a></div>
+                </div> */}
+               
             </div>
         )
     }
