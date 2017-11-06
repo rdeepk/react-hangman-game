@@ -18,12 +18,14 @@ class HangmanResult extends Component {
             gameOver: false,
             lost: false,
             message: "",
+            incorrectMessage: "",
+            disabledKeypad: false
         }
     }
 
     displayKeypad = (keys) => {
         let keysJSX = keys.map((key, i) => {
-                return <span><a key={i} href={key} onClick={(e) => {this.setInput(e)}}>{key}</a></span>
+                return <span><a key={i} style={this.state.disabledKeypad ? {pointerEvents: "none"}: null} href={key} onClick={(e) => {this.setInput(e)}}>{key}</a></span>
         })
         return keysJSX;
     }
@@ -36,11 +38,17 @@ class HangmanResult extends Component {
                 let match = false;
                 //check if it is in pastguesses else add to it
                 if (this.state.pastGuesses.indexOf(this.state.guess) !== -1) {
+                    this.setState({
+                        incorrectMessage: "The letter is already guessed"
+                    })
                     console.log('The letter is already guessed ', this.state.guess);
                     match = true;
                 }
             
                 if (!match) {
+                    this.setState({
+                        incorrectMessage: ""
+                    })
                     this.state.pastGuesses[this.state.pastGuesses.length] = this.state.guess;
                     this.setState(this.state.pastGuesses);
                     console.log(this.state.pastGuesses);
@@ -92,6 +100,7 @@ class HangmanResult extends Component {
                 lost: false,
                 gameOver: true,
                 message: "Congratulations! You have Won",
+                disabledKeypad: true
             })
             this.props.setWonStats(true)
         }
@@ -104,6 +113,7 @@ class HangmanResult extends Component {
                 lost: true,
                 gameOver: true,
                 message: "You have been hanged! The answer is '"+ this.state.randomWord + "'",
+                disabledKeypad: true
             })
             this.props.setWonStats(false)
             return true;
@@ -124,7 +134,8 @@ class HangmanResult extends Component {
             won: false,
             gameOver: false,
             lost: false,
-            message: ""
+            message: "",
+            disabledKeypad: false
         })
     }
 
@@ -148,6 +159,7 @@ class HangmanResult extends Component {
                 <div className="row">
                     <div className="col-sm-12 messages">
                         <h3>{this.state.message}</h3>
+                        <p>{this.state.incorrectMessage}</p>
                         <p>Your current guesses are: {this.state.pastGuesses.join(' ')}</p>
                         <p>Word is: {this.state.randomWord}</p>
                     </div>
