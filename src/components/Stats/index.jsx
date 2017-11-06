@@ -1,8 +1,13 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
+/**
+ * Display the counts of lost and won games.
+ */
 class Stats extends React.Component {
     render() {
+
+        //use stats from local storage if exists
         let storageStats = JSON.parse(localStorage.getItem("hangmanStats"));
         return(
             <div className="app">

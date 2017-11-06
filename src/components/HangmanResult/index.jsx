@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
-import PrintHangman from '../PrintHangman';
+import { Link } from 'react-router-dom';
 import PrintState from '../PrintState';
 
+/**
+ * Playing logic for hangman game.
+ */
 class HangmanResult extends Component {
 
     constructor(props) {
@@ -11,9 +13,9 @@ class HangmanResult extends Component {
         this.state = {
             guess: "",
             randomWord: props.words[index],
-            answer:props.words[index].split(''),
-            nWrong:0,
-            pastGuesses : [],
+            answer: props.words[index].split(''),
+            nWrong: 0,
+            pastGuesses: [],
             won: false,
             gameOver: false,
             lost: false,
@@ -23,23 +25,32 @@ class HangmanResult extends Component {
         }
     }
 
+    /**
+     * Takes an array of letters and display the keypad for user input. 
+    */
     displayKeypad = (keys) => {
         let keysJSX = keys.map((key, i) => {
-                return <span><a key={i} style={this.state.disabledKeypad ? {pointerEvents: "none", background: "#ccc", color: "#ddd"}: null} href={key} onClick={(e) => {this.setInput(e)}}>{key}</a></span>
+            return <span><a key={i} style={this.state.disabledKeypad ? { pointerEvents: "none", background: "#ccc", color: "#ddd" } : null} href={key} onClick={(e) => { this.setInput(e) }}>{key}</a></span>
         })
         return keysJSX;
     }
 
+    /**
+    * Update the loacl storage with every state change. 
+    */
     componentDidUpdate() {
         this.setLocalStorage();
     }
 
+    /**
+    * Sets the local storage from current state. 
+    */
     setLocalStorage = () => {
         localStorage.setItem("currentGame", JSON.stringify({
             guess: this.state.guess,
             randomWord: this.state.randomWord,
             answer: this.state.answer,
-            nWrong:this.state.nWrong,
+            nWrong: this.state.nWrong,
             pastGuesses: this.state.pastGuesses,
             won: this.state.won,
             gameOver: this.state.gameOver,
@@ -50,68 +61,75 @@ class HangmanResult extends Component {
         }))
     }
 
+    /**
+    * Gets the previous state from local storage and update the component state. 
+    */
     componentDidMount() {
-       let currentGameData = JSON.parse(localStorage.getItem("currentGame"));
-       if(currentGameData) {
-           this.setState({
-            guess: currentGameData.guess,
-            randomWord: currentGameData.randomWord,
-            answer: currentGameData.answer,
-            nWrong: currentGameData.nWrong,
-            pastGuesses: currentGameData.pastGuesses,
-            won: currentGameData.won,
-            gameOver: currentGameData.gameOver,
-            lost: currentGameData.lost,
-            message: currentGameData.message,
-            incorrectMessage: currentGameData.incorrectMessage,
-            disabledKeypad: currentGameData.disabledKeypad
-           })
-       }
+        let currentGameData = JSON.parse(localStorage.getItem("currentGame"));
+        if (currentGameData) {
+            this.setState({
+                guess: currentGameData.guess,
+                randomWord: currentGameData.randomWord,
+                answer: currentGameData.answer,
+                nWrong: currentGameData.nWrong,
+                pastGuesses: currentGameData.pastGuesses,
+                won: currentGameData.won,
+                gameOver: currentGameData.gameOver,
+                lost: currentGameData.lost,
+                message: currentGameData.message,
+                incorrectMessage: currentGameData.incorrectMessage,
+                disabledKeypad: currentGameData.disabledKeypad
+            })
+        }
     }
 
+    /**
+    * Input handler - validates the input for correct or incorrect guess.
+    */
     setInput = (e) => {
         e.preventDefault();
-            this.setState({
-                guess: e.target.href.substr(-1).toLowerCase()
-            },() => {
-                let match = false;
-                //check if it is in pastguesses else add to it
-                if (this.state.pastGuesses.indexOf(this.state.guess) !== -1) {
-                    this.setState({
-                        incorrectMessage: "The letter is already guessed"
-                    })
-                    // console.log('The letter is already guessed ', this.state.guess);
-                    match = true;
+        this.setState({
+            guess: e.target.href.substr(-1).toLowerCase()
+        }, () => {
+            let match = false;
+            //check if it is in pastguesses else add to it
+            if (this.state.pastGuesses.indexOf(this.state.guess) !== -1) {
+                this.setState({
+                    incorrectMessage: "The letter is already guessed"
+                })
+                // console.log('The letter is already guessed ', this.state.guess);
+                match = true;
+            }
+
+            if (!match) {
+                this.setState({
+                    incorrectMessage: ""
+                })
+                this.state.pastGuesses[this.state.pastGuesses.length] = this.state.guess;
+                let found;
+                console.log("answer", this.state.answer);
+                if (this.state.answer.indexOf(this.state.guess) !== -1) {
+                    found = true;
+                    // console.log("You found a relevant number");
                 }
-            
-                if (!match) {
+                this.checkWonCondition();
+
+                if (!found) {
+                    // console.log("Oops! Incorrect Choice. Please try again");
                     this.setState({
-                        incorrectMessage: ""
+                        nWrong: this.state.nWrong + 1
+                    }, () => {
+                        this.props.updateNWrongs(this.state.nWrong);
+                        this.isGameOver();
                     })
-                    this.state.pastGuesses[this.state.pastGuesses.length] = this.state.guess;
-                    this.setState(this.state.pastGuesses);
-                    console.log(this.state.pastGuesses);
-                    let found;
-                    console.log("answer", this.state.answer);
-                    if (this.state.answer.indexOf(this.state.guess) !== -1) {
-                        found = true;
-                        // console.log("You found a relevant number");
-                    }
-                    this.checkWonCondition();
-            
-                    if (!found) {
-                        // console.log("Oops! Incorrect Choice. Please try again");
-                        this.setState({
-                            nWrong: this.state.nWrong+1
-                        }, () => {
-                            this.props.updateNWrongs(this.state.nWrong);
-                            this.isGameOver();
-                        })
-                    }
                 }
-            })
+            }
+        })
     }
-    
+
+    /**
+    * Compare user guesses array with expected answer to check if user has won. 
+    */
     checkWonCondition = () => {
         let counter = 0;
         let str = "";
@@ -145,32 +163,38 @@ class HangmanResult extends Component {
         }
     }
 
+    /**
+    * Check if the game is over and set the state.
+    */
     isGameOver = () => {
-        if(this.state.nWrong >= 6) {
+        if (this.state.nWrong >= 6) {
             this.setState({
                 won: false,
                 lost: true,
                 gameOver: true,
-                message: "You have been hanged! The answer is '"+ this.state.randomWord + "'",
+                message: "You have been hanged! The answer is '" + this.state.randomWord + "'",
                 disabledKeypad: true
             })
             this.props.setWonStats(false)
             return true;
         }
-        if(this.state.won) {
+        if (this.state.won) {
             return true;
         }
         return false;
     }
 
+    /**
+    * Sets the state on the click of start new game. 
+    */
     setupGame = (e) => {
         e.preventDefault();
         const index = Math.floor(Math.random() * this.props.words.length);
         this.setState({
             randomWord: this.props.words[index],
             answer: this.props.words[index].split(''),
-            nWrong:0,
-            pastGuesses:[],
+            nWrong: 0,
+            pastGuesses: [],
             won: false,
             gameOver: false,
             lost: false,
@@ -202,7 +226,7 @@ class HangmanResult extends Component {
                 </div>
                 <div className="row">
                     <div className="col-sm-6 new-btn">
-                        <a className="btn" href="" onClick={(e) => {this.setupGame(e)}}>Start New Game</a>
+                        <a className="btn" href="" onClick={(e) => { this.setupGame(e) }}>Start New Game</a>
                     </div>
                     <div className="col-sm-6 view-stats">
                         <Link className="btn stats-btn" to="stats">View Stats</Link>
