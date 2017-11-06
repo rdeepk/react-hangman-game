@@ -17,7 +17,7 @@ body, html{
 }
 
 h1{
-  font-size: 20px;
+  font-size: 40px;
   margin: 40px 0 80px;
 }
 
@@ -71,21 +71,27 @@ button {
   background-color: black;
 }
 
+.transition {
+  transition: opacity .9s;
+  -moz-transition: opacity .9s;
+  -webkit-transition: opacity .9s;
+}
+
 .head{
   position: absolute;
   width: 60px;
   height: 60px;
-  bottom: 380px;
-  left: 353px;
+  bottom: 390px;
+  left: 360px;
   border-radius: 100px;
-  border: 7px solid black;
+  border: 7px solid black; 
 }
 
 .body{
   position: absolute;
   width: 7px;
   height: 120px;
-  bottom: 260px;
+  bottom: 270px;
   left: 387px;
   background-color: black;
 }
@@ -115,7 +121,7 @@ button {
   position: absolute;
   height: 60px;
   width: 7px;
-  bottom: 210px;
+  bottom: 220px;
   left: 365px;
   background-color: black;
 }
@@ -125,7 +131,7 @@ button {
   position: absolute;
   height: 60px;
   width: 7px;
-  bottom: 210px;
+  bottom: 220px;
   left: 409px;
   background-color: black;
 }
@@ -148,25 +154,70 @@ button {
   font-size: 28px;
 }
 
+.keypad a:active {
+  background-color: #111;
+  color: #fff;
+  -webkit-transition: background-color .5s, color .5s;
+  -moz-transition: background-color, .5s, color .5s;
+  transition: background-color .5s, color .5s;
+}
+ 
 .game-state {
   margin: 40px 0;
   text-align: center;
   font-size: 58px;
 }
 
-.new-btn a {
+.messages {
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.messages p {
+  font-size: 18px;
+}
+
+.messages h3 {
+  font-size: 28px;
+}
+
+.new-btn a,
+.stats-btn {
   background: #000;
   color: #fff;
   font-size: 20px;
-  border-radius: 4px;
-  padding: 10px 25px;
-}
-.guess{
-  font-size: 2em;
+  border-radius: 6px;
+  padding: 20px 25px;
 }
 
-/* .gameContainer{
-  position: absolute;
-  left: 50%;
-  top: 20%;
-} */
+.new-btn a:hover,
+.new-btn a:active,
+.new-btn a:focus,
+.stats-btn:hover,
+.stats-btn:focus,
+.stats-btn:active {
+  text-decoration: none;
+  background: #fff;
+  color: #000;
+  border: 1px solid #000;
+  -webkit-transition: background-color .5s, color .5s;
+  -moz-transition: background-color, .5s, color .5s;
+  transition: background-color .5s, color .5s;
+}
+
+.stats {
+  text-align: center
+}
+
+.stats h1 {
+  font-size: 30px;
+}
+
+.stats p {
+  font-size: 24px;
+}
+
+.link {
+  text-align: center;
+  margin: 80px 0;
+}

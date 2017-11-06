@@ -1,39 +1,38 @@
 import React, { Component } from 'react';
-import PrintHangman from '../PrintHangman';
+import {Route, Switch} from 'react-router-dom';
 import Hangman from '../Hangman';
+import Stats from '../Stats';
 import './App.css';
 
 class App extends Component {
     constructor() {
       super();
       this.state = {
-        nWrong: 0
+        won: 0,
+        lost: 0
+      }
+    }
+    
+    setWonStats = (won) => {
+      if(won) {
+        this.setState({
+          won: this.state.won + 1
+        })
+      } else {
+        this.setState({
+          lost: this.state.lost + 1
+        })
       }
     }
 
-  updateNWrongs = (nWrong) => {
-    this.setState({
-      nWrong: nWrong
-    })
-  }
-
   render() {
     return (
-      <div className="app">
-        <div className="row header">
-            <div className="col-sm-12">
-              <h1>HANGMAN</h1>
-            </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-6">
-            <PrintHangman keys={this.props.keys} words={this.props.words} nWrong={this.state.nWrong} />
-          </div>
-          <div className="col-sm-6">
-            <Hangman keys={this.props.keys} words={this.props.words} updateNWrongs={this.updateNWrongs} />
-          </div>
-        </div>
-      </div>
+      <Switch>
+      <Route path="/" exact render={(props) => (<Hangman keys={this.props.keys} words={this.props.words} setWonStats={this.setWonStats} />
+       )} />
+      <Route path="/stats" render={(props) => (<Stats won={this.state.won} lost={this.state.lost} />
+       )} />
+    </Switch>
     )
   }
 }
