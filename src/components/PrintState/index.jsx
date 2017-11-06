@@ -5,13 +5,13 @@ class PrintState extends Component {
     constructor() {
         super();
         this.state = {
-            gameState: ""
+            gameState: "",
         }
     }
 
     counter = 0;
-
   setGameState = () => {
+      this.counter = 0;
     let str = "";
     // for each letter in the target word
     for (let i = 0; i < this.props.answer.length; i++) {
@@ -31,30 +31,15 @@ class PrintState extends Component {
             str += "__\t";
         }
     }
-    // this.setState({
-    //     gameState: str
-    // })
-    console.log(this.counter, this.props.answer.length);
-    if (this.counter === this.props.answer.length) {
-        this.props.setWon();
-    }
+   
     return str;
   }
-  
+
   componentDidUpdate() {
-    //this.setGameState();
+      if (this.counter === this.props.answer.length) {
+        this.props.setWon();
+    }
   }
-//   componentDidMount() {
-//     this.setGameState();
-//       console.log("did upadate");
-//       console.log(this.counter, this.props.answer.length);
-//       if (this.counter === this.props.answer.length) {
-//           console.log("condition met");
-//           this.counter = 0;
-//         this.props.setWon();
-//     }
-    
-//   }
 
   render() {
     return (
