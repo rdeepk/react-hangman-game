@@ -25,7 +25,7 @@ class HangmanResult extends Component {
 
     displayKeypad = (keys) => {
         let keysJSX = keys.map((key, i) => {
-                return <span><a key={i} style={this.state.disabledKeypad ? {pointerEvents: "none"}: null} href={key} onClick={(e) => {this.setInput(e)}}>{key}</a></span>
+                return <span><a key={i} style={this.state.disabledKeypad ? {pointerEvents: "none", background: "#ccc", color: "#ddd"}: null} href={key} onClick={(e) => {this.setInput(e)}}>{key}</a></span>
         })
         return keysJSX;
     }
@@ -41,7 +41,7 @@ class HangmanResult extends Component {
                     this.setState({
                         incorrectMessage: "The letter is already guessed"
                     })
-                    console.log('The letter is already guessed ', this.state.guess);
+                    // console.log('The letter is already guessed ', this.state.guess);
                     match = true;
                 }
             
@@ -56,12 +56,12 @@ class HangmanResult extends Component {
                     console.log("answer", this.state.answer);
                     if (this.state.answer.indexOf(this.state.guess) !== -1) {
                         found = true;
-                        console.log("You found a relevant number");
+                        // console.log("You found a relevant number");
                     }
                     this.checkWonCondition();
             
                     if (!found) {
-                        console.log("Oops! Incorrect Choice. Please try again");
+                        // console.log("Oops! Incorrect Choice. Please try again");
                         this.setState({
                             nWrong: this.state.nWrong+1
                         }, () => {
@@ -161,7 +161,7 @@ class HangmanResult extends Component {
                         <h3>{this.state.message}</h3>
                         <p>{this.state.incorrectMessage}</p>
                         <p>Your current guesses are: {this.state.pastGuesses.join(' ')}</p>
-                        <p>Word is: {this.state.randomWord}</p>
+                        {/* <p>Word is: {this.state.randomWord}</p> */}
                     </div>
                 </div>
                 <div className="row">
