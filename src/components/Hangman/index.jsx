@@ -30,7 +30,7 @@ class Hangman extends Component {
 
     setInput = (e) => {
         e.preventDefault();
-        if(!this.state.gameOver) {
+
             this.setState({
                 guess: e.target.href.substr(-1).toLowerCase()
             },() => {
@@ -58,21 +58,38 @@ class Hangman extends Component {
                             nWrong: this.state.nWrong+1
                         }, () => {
                             this.props.updateHangman(this.state.nWrong);
+                            this.isGameOver();
                         })
                     }
                 }
             })
-        }
     }
 
     setWon = () => {
         console.log("setting won");
         this.setState({
             won: true,
+            lost: false,
             gameOver: true,
             message: "You Won"
         })
     }   
+
+    isGameOver = () => {
+        if(this.state.nWrong >= 6) {
+            this.setState({
+                won: false,
+                lost: true,
+                gameOver: true,
+                message: "You Lost"
+            })
+            return true;
+        }
+        if(this.state.won) {
+            return true;
+        }
+        return false;
+    }
 
     setupGame = () => {
         const index = Math.floor(Math.random() * this.props.words.length);
