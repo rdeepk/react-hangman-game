@@ -124,7 +124,8 @@ class HangmanResult extends Component {
         return false;
     }
 
-    setupGame = () => {
+    setupGame = (e) => {
+        e.preventDefault();
         const index = Math.floor(Math.random() * this.props.words.length);
         this.setState({
             randomWord: this.props.words[index],
@@ -137,10 +138,6 @@ class HangmanResult extends Component {
             message: "",
             disabledKeypad: false
         })
-    }
-
-    updateStats = () => {
-
     }
 
     render() {
@@ -166,7 +163,7 @@ class HangmanResult extends Component {
                 </div>
                 <div className="row">
                     <div className="col-sm-6 new-btn">
-                        <a className="btn" href="" onClick={this.setupGame}>Start New Game</a>
+                        <a className="btn" href="" onClick={(e) => {this.setupGame(e)}}>Start New Game</a>
                     </div>
                     <div className="col-sm-6 view-stats">
                         <Link className="btn stats-btn" to="stats">View Stats</Link>

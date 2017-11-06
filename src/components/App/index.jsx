@@ -12,17 +12,48 @@ class App extends Component {
         lost: 0
       }
     }
+
+    componentDidMount() {
+      localStorage.setItem("hangmanStats", JSON.stringify({
+        wonCount: 0,
+        lostCount: 0
+      }))
+    }
     
     setWonStats = (won) => {
+      let storageStats = JSON.parse(localStorage.getItem("hangmanStats"));
       if(won) {
+        if(storageStats) {
+          localStorage.setItem("hangmanStats", JSON.stringify({
+            wonCount: storageStats.wonCount + 1,
+            lostCount: storageStats.lostCount
+          }))
+        } else {
+          localStorage.setItem("hangmanStats", JSON.stringify({
+            wonCount: this.state.won + 1,
+            lostCount: this.state.lost
+          }))
+        }
         this.setState({
           won: this.state.won + 1
         })
       } else {
+        if(storageStats) {
+          localStorage.setItem("hangmanStats", JSON.stringify({
+            wonCount: storageStats.wonCount,
+            lostCount: storageStats.lostCount+ 1
+          }))
+        } else {
+          localStorage.setItem("hangmanStats", JSON.stringify({
+            wonCount: this.state.won,
+            lostCount: this.state.lost + 1
+          }))
+        }
         this.setState({
           lost: this.state.lost + 1
         })
       }
+      console.log(localStorage.getItem("hangmanStats"));
     }
 
   render() {
