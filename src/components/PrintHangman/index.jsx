@@ -14,8 +14,9 @@ class PrintHangman extends Component {
           }
       }
 
-      updateHangman = () => {
-        switch(this.props.nWrong) {
+      updateHangman = (nWrong) => {
+          console.log(nWrong);
+        switch(nWrong) {
             case 1:
                 this.setState({
                     displayHead: "block"
@@ -74,7 +75,7 @@ class PrintHangman extends Component {
                 <div style={{display:this.state.displayLeftLeg}} className='leftLeg'></div>
                 <div style={{display:this.state.displayRightLeg}} className='rightLeg'></div>
             </div>
-            <Hangman keys={this.props.keys} words={this.props.words} />
+            <Hangman keys={this.props.keys} words={this.props.words} updateHangman={this.updateHangman} />
             </div>
             )
         }
