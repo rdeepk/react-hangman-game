@@ -60,8 +60,12 @@ class App extends Component {
   render() {
     return (
       <Switch>
-      <Route path="/" exact render={(props) => (<Hangman keys={this.props.keys} words={this.props.words} setWonStats={this.setWonStats} />
-       )} />
+      {/* <Route path="/" exact render={(props) => (<Hangman keys={this.props.keys} words={this.props.words} setWonStats={this.setWonStats} />
+       )} /> */}
+      <Route path="/" exact render={ () => {
+            return <Hangman keys={this.props.keys} words={this.props.words} setWonStats={this.setWonStats} />
+           }} 
+      />
       <Route path="/stats" render={(props) => (<Stats won={this.state.won} lost={this.state.lost} />
        )} />
     </Switch>

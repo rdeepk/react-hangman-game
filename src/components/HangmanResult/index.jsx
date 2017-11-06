@@ -30,6 +30,45 @@ class HangmanResult extends Component {
         return keysJSX;
     }
 
+    componentDidUpdate() {
+        this.setLocalStorage();
+    }
+
+    setLocalStorage = () => {
+        localStorage.setItem("currentGame", JSON.stringify({
+            guess: this.state.guess,
+            randomWord: this.state.randomWord,
+            answer: this.state.answer,
+            nWrong:this.state.nWrong,
+            pastGuesses: this.state.pastGuesses,
+            won: this.state.won,
+            gameOver: this.state.gameOver,
+            lost: this.state.lost,
+            message: this.state.message,
+            incorrectMessage: this.state.incorrectMessage,
+            disabledKeypad: this.state.disabledKeypad
+        }))
+    }
+
+    componentDidMount() {
+       let currentGameData = JSON.parse(localStorage.getItem("currentGame"));
+       if(currentGameData) {
+           this.setState({
+            guess: currentGameData.guess,
+            randomWord: currentGameData.randomWord,
+            answer: currentGameData.answer,
+            nWrong: currentGameData.nWrong,
+            pastGuesses: currentGameData.pastGuesses,
+            won: currentGameData.won,
+            gameOver: currentGameData.gameOver,
+            lost: currentGameData.lost,
+            message: currentGameData.message,
+            incorrectMessage: currentGameData.incorrectMessage,
+            disabledKeypad: currentGameData.disabledKeypad
+           })
+       }
+    }
+
     setInput = (e) => {
         e.preventDefault();
             this.setState({
