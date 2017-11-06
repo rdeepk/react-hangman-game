@@ -14,9 +14,10 @@ class App extends Component {
     }
 
     componentDidMount() {
+      let storageStats = JSON.parse(localStorage.getItem("hangmanStats"));
       localStorage.setItem("hangmanStats", JSON.stringify({
-        wonCount: 0,
-        lostCount: 0
+        wonCount: storageStats ? storageStats.wonCount :0,
+        lostCount: storageStats ? storageStats.lostCount : 0
       }))
     }
     
