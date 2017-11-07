@@ -12,7 +12,8 @@ class App extends Component {
     super();
     this.state = {
       won: 0,
-      lost: 0
+      lost: 0,
+      highestScore: 0
     }
   }
 
@@ -66,6 +67,13 @@ class App extends Component {
     console.log(localStorage.getItem("hangmanStats"));
   }
 
+  setHighestScore = (score) => {
+    console.log("setting score");
+    this.setState({
+      highestScore: score
+    })
+  }
+
   
   render() {
     return (
@@ -73,10 +81,10 @@ class App extends Component {
         {/* <Route path="/" exact render={(props) => (<Hangman keys={this.props.keys} words={this.props.words} setWonStats={this.setWonStats} />
        )} /> */}
         <Route path="/" exact render={() => {
-          return <Hangman keys={this.props.keys} words={this.props.words} setWonStats={this.setWonStats} />
+          return <Hangman keys={this.props.keys} words={this.props.words} setWonStats={this.setWonStats} setHighestScore={this.setHighestScore} />
         }}
         />
-        <Route path="/stats" render={(props) => (<Stats won={this.state.won} lost={this.state.lost} />
+        <Route path="/stats" render={(props) => (<Stats won={this.state.won} lost={this.state.lost} highestScore={this.state.highestScore} />
         )} />
       </Switch>
     )

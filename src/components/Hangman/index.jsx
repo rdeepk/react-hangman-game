@@ -35,7 +35,7 @@ class Hangman extends Component {
             <PrintHangman keys={this.props.keys} words={this.props.words} nWrong={this.state.nWrong} />
           </div>
           <div className="col-md-6">
-            <HangmanResult keys={this.props.keys} words={this.props.words} updateNWrongs={this.updateNWrongs} setWonStats={this.props.setWonStats} />
+            <HangmanResult keys={this.props.keys} words={this.props.words} updateNWrongs={this.updateNWrongs} setWonStats={this.props.setWonStats} setHighestScore={this.props.setHighestScore} />
           </div>
         </div>
       </div>

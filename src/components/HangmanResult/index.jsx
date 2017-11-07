@@ -21,7 +21,21 @@ class HangmanResult extends Component {
             lost: false,
             message: "",
             incorrectMessage: "",
-            disabledKeypad: false
+            disabledKeypad: false,
+            tries : 0,
+            highestScore: 0
+        }
+    }
+
+    /**
+     * Sets best game score with smaller number of tries. 
+    */
+    setHighestScore = () => {
+        if((this.state.tries < this.state.highestScore) || (this.state.highestScore === 0)) {
+            this.setState({
+                highestScore: this.state.tries
+            })
+            this.props.setHighestScore(this.state.tries);
         }
     }
 
@@ -46,21 +60,7 @@ class HangmanResult extends Component {
     * Sets the local storage from current state. 
     */
     setLocalStorage = () => {
-        localStorage.setItem("currentGame", JSON.stringify(this.state
-        //     {
-        //     guess: this.state.guess,
-        //     randomWord: this.state.randomWord,
-        //     answer: this.state.answer,
-        //     nWrong: this.state.nWrong,
-        //     pastGuesses: this.state.pastGuesses,
-        //     won: this.state.won,
-        //     gameOver: this.state.gameOver,
-        //     lost: this.state.lost,
-        //     message: this.state.message,
-        //     incorrectMessage: this.state.incorrectMessage,
-        //     disabledKeypad: this.state.disabledKeypad
-        // }
-    ))
+        localStorage.setItem("currentGame", JSON.stringify(this.state))
     }
 
     /**
@@ -71,21 +71,7 @@ class HangmanResult extends Component {
         if (currentGameData) {
             this.setState(currentGameData, () => {
                 this.props.updateNWrongs(this.state.nWrong);
-            }
-            //     {
-            //     guess: currentGameData.guess,
-            //     randomWord: currentGameData.randomWord,
-            //     answer: currentGameData.answer,
-            //     nWrong: currentGameData.nWrong,
-            //     pastGuesses: currentGameData.pastGuesses,
-            //     won: currentGameData.won,
-            //     gameOver: currentGameData.gameOver,
-            //     lost: currentGameData.lost,
-            //     message: currentGameData.message,
-            //     incorrectMessage: currentGameData.incorrectMessage,
-            //     disabledKeypad: currentGameData.disabledKeypad
-            // }
-        )
+            })
         }
     }
 
@@ -95,7 +81,8 @@ class HangmanResult extends Component {
     setInput = (e) => {
         e.preventDefault();
         this.setState({
-            guess: e.target.href.substr(-1).toLowerCase()
+            guess: e.target.href.substr(-1).toLowerCase(),
+            tries: this.state.tries + 1
         }, () => {
             let match = false;
             //check if it is in pastguesses else add to it
@@ -166,6 +153,7 @@ class HangmanResult extends Component {
                 disabledKeypad: true
             })
             this.props.setWonStats(true)
+            this.setHighestScore();
         }
     }
 
@@ -181,7 +169,8 @@ class HangmanResult extends Component {
                 message: "You have been hanged! The answer is '" + this.state.randomWord + "'",
                 disabledKeypad: true
             })
-            this.props.setWonStats(false)
+            this.props.setWonStats(false);
+            this.setHighestScore();
             return true;
         }
         if (this.state.won) {
@@ -205,7 +194,8 @@ class HangmanResult extends Component {
             gameOver: false,
             lost: false,
             message: "",
-            disabledKeypad: false
+            disabledKeypad: false,
+            tries: 0
         }, () => {
             this.props.updateNWrongs(this.state.nWrong);
         })

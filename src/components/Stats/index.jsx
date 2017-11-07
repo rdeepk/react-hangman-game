@@ -23,6 +23,7 @@ class Stats extends React.Component {
                                                     this.props.won + this.props.lost}</p>
                         <p>Lost:  { storageStats ? storageStats.lostCount : this.props.lost}</p>
                         <p>Won: { storageStats ? storageStats.wonCount : this.props.won}</p>
+                        <p>Best Score with tries: {this.props.highestScore}</p> 
                     </div>
                 </div>
                 <div className="row">
