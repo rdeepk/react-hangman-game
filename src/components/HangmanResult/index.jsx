@@ -46,19 +46,21 @@ class HangmanResult extends Component {
     * Sets the local storage from current state. 
     */
     setLocalStorage = () => {
-        localStorage.setItem("currentGame", JSON.stringify({
-            guess: this.state.guess,
-            randomWord: this.state.randomWord,
-            answer: this.state.answer,
-            nWrong: this.state.nWrong,
-            pastGuesses: this.state.pastGuesses,
-            won: this.state.won,
-            gameOver: this.state.gameOver,
-            lost: this.state.lost,
-            message: this.state.message,
-            incorrectMessage: this.state.incorrectMessage,
-            disabledKeypad: this.state.disabledKeypad
-        }))
+        localStorage.setItem("currentGame", JSON.stringify(this.state
+        //     {
+        //     guess: this.state.guess,
+        //     randomWord: this.state.randomWord,
+        //     answer: this.state.answer,
+        //     nWrong: this.state.nWrong,
+        //     pastGuesses: this.state.pastGuesses,
+        //     won: this.state.won,
+        //     gameOver: this.state.gameOver,
+        //     lost: this.state.lost,
+        //     message: this.state.message,
+        //     incorrectMessage: this.state.incorrectMessage,
+        //     disabledKeypad: this.state.disabledKeypad
+        // }
+    ))
     }
 
     /**
@@ -67,19 +69,23 @@ class HangmanResult extends Component {
     componentDidMount() {
         let currentGameData = JSON.parse(localStorage.getItem("currentGame"));
         if (currentGameData) {
-            this.setState({
-                guess: currentGameData.guess,
-                randomWord: currentGameData.randomWord,
-                answer: currentGameData.answer,
-                nWrong: currentGameData.nWrong,
-                pastGuesses: currentGameData.pastGuesses,
-                won: currentGameData.won,
-                gameOver: currentGameData.gameOver,
-                lost: currentGameData.lost,
-                message: currentGameData.message,
-                incorrectMessage: currentGameData.incorrectMessage,
-                disabledKeypad: currentGameData.disabledKeypad
-            })
+            this.setState(currentGameData, () => {
+                this.props.updateNWrongs(this.state.nWrong);
+            }
+            //     {
+            //     guess: currentGameData.guess,
+            //     randomWord: currentGameData.randomWord,
+            //     answer: currentGameData.answer,
+            //     nWrong: currentGameData.nWrong,
+            //     pastGuesses: currentGameData.pastGuesses,
+            //     won: currentGameData.won,
+            //     gameOver: currentGameData.gameOver,
+            //     lost: currentGameData.lost,
+            //     message: currentGameData.message,
+            //     incorrectMessage: currentGameData.incorrectMessage,
+            //     disabledKeypad: currentGameData.disabledKeypad
+            // }
+        )
         }
     }
 
@@ -200,6 +206,8 @@ class HangmanResult extends Component {
             lost: false,
             message: "",
             disabledKeypad: false
+        }, () => {
+            this.props.updateNWrongs(this.state.nWrong);
         })
     }
 
