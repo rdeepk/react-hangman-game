@@ -1,4 +1,4 @@
-##react-hangman-game
+## Hangman game
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
