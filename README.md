@@ -11,3 +11,5 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - Allows user to play hangman game.
 - Displays the game statistics for the user.
 
+# [Demo](https://serene-hamlet-11026.herokuapp.com/)
+
